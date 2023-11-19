@@ -1,11 +1,11 @@
 'timescale 1ns/1ps
-module alu.v(
+module ALU(
     input [31:0]SrcA,
     input [31:0]SrcB,
     input [2:0]ALUControl,
     input [2:0]ALUop,
     output reg [31:0]ALUResult,
-    output reg branchTaken,
+    output reg zeroflag,
     output reg carry
 );
 always @(*)
