@@ -1,4 +1,5 @@
 # RISC-V ALU Design
+By Rohan Gupta & Adideb Das
 
 ## Overview
 
