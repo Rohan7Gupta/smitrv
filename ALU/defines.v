@@ -1,0 +1,12 @@
+`define     ADD         4'b00_00
+`define     SUB         4'b00_01
+`define     PASS        4'b00_11
+`define     OR          4'b01_00
+`define     AND         4'b01_01
+`define     XOR         4'b01_11
+`define     SRL         4'b10_00
+`define     SRA         4'b10_10
+`define     SLL         4'b10_01
+`define     SLT         4'b11_01
+`define     SLTU        4'b11_11
+`define     NOP         4'b11_10

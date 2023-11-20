@@ -8,11 +8,6 @@ module adder_32(
     );
 wire [31:0] w;
 assign w[0]=cin;
-// full_adder L0 (a[0],b[0],w[0],sum[0],w[1]);
-// full_adder L1 (a[1],b[1],w[0],sum[1],w[2]);
-// full_adder L2 (a[2],b[2],w[1],sum[2],w[3]);
-// full_adder L2 (a[2],b[2],w[1],sum[2],w[2]);
-// full_adder L31 (a[31],b[31],w[2],sum[3],carry);
 
 generate
     for(i = 0; i < 32; i = i + 1)begin:Adder32BitBlock
