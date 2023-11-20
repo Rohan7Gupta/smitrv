@@ -19,21 +19,21 @@ always @(*)
 begin
     case (ALUOp)
         
-        `ADD : ALUReslt = addTemp; 
-        `SUB : ALUReslt = addTemp; 
-        `PASS: ALUReslt = SrcB;
+        `ADD : ALUResult = addTemp; 
+        `SUB : ALUResult = addTemp; 
+        `PASS: ALUResult = SrcB;
         
-        `OR:  ALUReslt = SrcA | SrcB;
-        `AND:  ALUReslt = SrcA & SrcB;
-        `XOR:  ALUReslt = SrcA ^ SrcB;
+        `OR:  ALUResult = SrcA | SrcB;
+        `AND:  ALUResult = SrcA & SrcB;
+        `XOR:  ALUResult = SrcA ^ SrcB;
         
-        `SRL:  ALUReslt=(SrcA >> SrcB); 
-        `SRA:  ALUReslt=(SrcA >>> SrcB);
-        `SLL:  ALUReslt=(SrcA << SrcB);
+        `SRL:  ALUResult=(SrcA >> SrcB); 
+        `SRA:  ALUResult=(SrcA >>> SrcB);
+        `SLL:  ALUResult=(SrcA << SrcB);
         
-        `SLT:  ALUReslt = {31'b0,(signFlag != overFlowFlag)}; 
-        `SLTU: ALUReslt = {31'b0,(~carryFlag)};      
-        default: ALUReslt = 32'b0;         
+        `SLT:  ALUResult = {31'b0,(signf != overFlowf)}; 
+        `SLTU: ALUResult = {31'b0,(~carryf)};      
+        default: ALUResult = 32'b0;         
     endcase
 end
 endmodule
