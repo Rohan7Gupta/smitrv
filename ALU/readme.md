@@ -4,43 +4,57 @@ By Rohan Gupta & Adideb Das
 ## Overview
 
 This project involves the design of a RISC-V processor ALU. The processor has various components, and this README provides information about the Arithmetic Logic Unit (ALU) and its inputs and outputs.
-
+Note -> The decode unit decodes the instructions and prepares the immediate values and shift values in the immediate register
+Note-> The implemnentation for pc=pc+4 is not added yet.
+Ignore files other than:
+1. ALU_core.v
+2. alu_ctrl.v
+3. MUX32_4_1.v
+4. MUX32_2_1.v
+5. defines.v
 ## Processor Architecture
 
 ![Processor Architecture](https://github.com/Rohan7Gupta/smitrv/assets/107053094/ef118744-9367-43c2-9b14-e6c7b1c1c094)
 
 ## ALU Details
+### alu_ctrl.v
+#### Inputs
+1. **opcode[6:0]:** Specifies the ALU operation based on the opcode of the instruction: (from Control unit module) (R,I,B,J,S,L) Types
+2. **ALUControl[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
+3. **funct7[6:0]:** add or sub
 
-### Inputs
+#### Outputs
+1. **ALUOp[3:0]:** Type of operation
+-  ADD         4'b00_00
+-  SUB         4'b00_01
+-  PASS        4'b00_11
+-  OR          4'b01_00
+-  AND         4'b01_01
+-  XOR         4'b01_11
+-  SRL         4'b10_00
+-  SRA         4'b10_10
+-  SLL         4'b10_01
+- SLT         4'b11_01
+- SLTU        4'b11_11
+- NOP         4'b11_10
 
-1. **SrcA[31:0]:** First source operand for the ALU.
-2. **SrcB[31:0]:** Second source operand for the ALU, selected from the ALU multiplexer.
-3. **ALUControl[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
-4. **ALUop[2:0]:** Specifies the ALU operation based on the opcode of the instruction: (from ALU_OP module)
-   - `0:` R-type operation (ADD, AND, OR, SLL, STL, STLU, SRL, XOR).
-   - `1:` R-type operation (SUB, SRA).
-   - `2:` I-type operation with specific opcode values.
-   - `3:` B-type operation with opcode "1100011".
-   - `4:` J-type operation with opcode "1101111".
-   - `5:` S-type operation with opcode "0100011".
-   - `6:` U-type operation with specific opcode values.
+### ALU_core.v
+#### Inputs
+1. **SrcA[31:0]:** First source operand for the ALU from MUX32_2_!.
+2. **SrcB[31:0]:** Second source operand for the ALU, selected from MUX32_4_1.
+3. **ALUOp:** Type of operatin.
 
-### Outputs
-
+#### Outputs
 1. **ALUResult[31:0]:** Result of the ALU operation (to multiplexer).
-2. **branchTaken:** Indicates whether a branch is taken.
-
+2. **zerof , signf, overFlowf, carryf**  Flags
 ## Example Instructions
 
-### R-Type Instruction
+### Instruction
+![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/15405f0f-cb8d-42f9-9c77-184ecde39977)
 
-![R-Type Instruction](https://github.com/Rohan7Gupta/smitrv/assets/107053094/aa4e96d8-b3d9-4223-8078-18cca0e9445c)
-
-### I-Type Instruction
-
-![I-Type Instruction](https://github.com/Rohan7Gupta/smitrv/assets/107053094/b7374167-2251-4479-a7c9-46cf2f3f85b2)
 
 ## Reference
 
 For more details on the RISC-V processor design, you can refer to the [Medium article](https://medium.com/programmatic/how-to-design-a-risc-v-processor-12388e1163c).
+Implementation inspired from (https://github.com/Moo-osama/RISCV-verilog/tree/main)
 
