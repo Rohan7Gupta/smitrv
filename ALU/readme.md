@@ -3,10 +3,10 @@ By Rohan Gupta & Adideb Das
 
 ## Overview
 
-This project involves the design of a RISC-V processor ALU. The processor has various components, and this README provides information about the Arithmetic Logic Unit (ALU) and its inputs and outputs.
-Note -> The decode unit decodes the instructions and prepares the immediate values and shift values in the immediate register
-Note-> The implemnentation for pc=pc+4 is not added yet.
-Ignore files other than:
+- This project involves the design of a RISC-V processor ALU. The processor has various components, and this README provides information about the Arithmetic Logic Unit (ALU) and its inputs and outputs.
+- Note -> The decode unit decodes the instructions and prepares the immediate values and shift values in the immediate register
+- Note-> The implemnentation for pc=pc+4 is not added yet.
+- Ignore files other than:
 1. ALU_core.v
 2. alu_ctrl.v
 3. MUX32_4_1.v
