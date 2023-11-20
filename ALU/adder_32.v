@@ -1,7 +1,8 @@
+`include "Full_adder.v"
 module adder_32(
     input [31:0] a,
     input [31:0] b,
-    input cin,
+    input cin,  
     output [31:0] sum,
     output carry
     );
@@ -11,7 +12,7 @@ assign w[0]=cin;
 // full_adder L1 (a[1],b[1],w[0],sum[1],w[2]);
 // full_adder L2 (a[2],b[2],w[1],sum[2],w[3]);
 // full_adder L2 (a[2],b[2],w[1],sum[2],w[2]);
-// full_adder L31 (a[3],b[3],w[2],sum[3],carry);
+// full_adder L31 (a[31],b[31],w[2],sum[3],carry);
 
 generate
     for(i = 0; i < 32; i = i + 1)begin:Adder32BitBlock

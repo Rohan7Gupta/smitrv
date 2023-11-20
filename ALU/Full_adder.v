@@ -1,5 +1,4 @@
-`timescale 1ns / 1ps
-
+`include "Half_adder.v"
 module FULL_ADDER(
     input X,
     input Y,
