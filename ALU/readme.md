@@ -25,18 +25,18 @@ Ignore files other than:
 
 #### Outputs
 1. **ALUOp[3:0]:** Type of operation
-`define     ADD         4'b00_00
-`define     SUB         4'b00_01
-`define     PASS        4'b00_11
-`define     OR          4'b01_00
-`define     AND         4'b01_01
-`define     XOR         4'b01_11
-`define     SRL         4'b10_00
-`define     SRA         4'b10_10
-`define     SLL         4'b10_01
-`define     SLT         4'b11_01
-`define     SLTU        4'b11_11
-`define     NOP         4'b11_10
+1.  ADD         4'b00_00
+2.  SUB         4'b00_01
+3.  PASS        4'b00_11
+4.  OR          4'b01_00
+5.  AND         4'b01_01
+6.  XOR         4'b01_11
+7.  SRL         4'b10_00
+8.  SRA         4'b10_10
+9.  SLL         4'b10_01
+10. SLT         4'b11_01
+11. SLTU        4'b11_11
+12. NOP         4'b11_10
 
 ### ALU_core.v
 #### Inputs
