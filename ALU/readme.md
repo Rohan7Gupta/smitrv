@@ -25,18 +25,18 @@ Ignore files other than:
 
 #### Outputs
 1. **ALUOp[3:0]:** Type of operation
-1.  ADD         4'b00_00
-2.  SUB         4'b00_01
-3.  PASS        4'b00_11
-4.  OR          4'b01_00
-5.  AND         4'b01_01
-6.  XOR         4'b01_11
-7.  SRL         4'b10_00
-8.  SRA         4'b10_10
-9.  SLL         4'b10_01
-10. SLT         4'b11_01
-11. SLTU        4'b11_11
-12. NOP         4'b11_10
+-  ADD         4'b00_00
+-  SUB         4'b00_01
+-  PASS        4'b00_11
+-  OR          4'b01_00
+-  AND         4'b01_01
+-  XOR         4'b01_11
+-  SRL         4'b10_00
+-  SRA         4'b10_10
+-  SLL         4'b10_01
+- SLT         4'b11_01
+- SLTU        4'b11_11
+- NOP         4'b11_10
 
 ### ALU_core.v
 #### Inputs
