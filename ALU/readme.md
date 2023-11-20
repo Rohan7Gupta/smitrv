@@ -62,6 +62,11 @@ By Rohan Gupta & Adideb Das
 #### Outputs
 1. **branch** 1 if branch or 0
 
+
+## Instruction format
+![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/15405f0f-cb8d-42f9-9c77-184ecde39977)
+
+
 ## testing
 ### ALU_core_tb.v
 ##### How to execute
@@ -69,10 +74,8 @@ By Rohan Gupta & Adideb Das
 - vvp ALU_core_tb.vvp
 - gtkwave alu_core_test.vcd
 
-## Instruction format
-![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/15405f0f-cb8d-42f9-9c77-184ecde39977)
-
 ## ALU_core_tb waveform
+![waveform](https://github.com/Rohan7Gupta/smitrv/assets/107053094/b95ff712-af9a-4ac9-96df-2e437c46f40e)
 
 
 ## Reference
