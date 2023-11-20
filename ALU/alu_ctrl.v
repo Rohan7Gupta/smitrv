@@ -2,7 +2,7 @@
 `include "defines.v"
 module ALU_ctrl(
     input wire [6:0]opcode_reg,
-    input wire [2:0]funct3_reg,
+    input wire [2:0]AluControl_reg,
     input wire [6:0]funct7_reg,
     output reg [3:0]ALUOp
 );
@@ -12,7 +12,7 @@ begin
         //  R-type instructions
         7'b0110011: begin
             if (funct7_reg == 7'b0000000) begin
-                case (funct3_reg)
+                case (AluControl_reg)
                     3'b000: ALUOp = `ADD; //add
                     3'b001: ALUOp = `SLL; //sll
                     3'b010: ALUOp = `SLT; //slt
@@ -24,7 +24,7 @@ begin
                 endcase
             end
             else if (funct7_reg == 7'b0100000) begin
-                case (funct3_reg)
+                case (AluControl_reg)
                     3'b000: ALUOp = `SUB; //sub
                     3'b101: ALUOp = `SRA; //sra
                 endcase
@@ -39,7 +39,7 @@ begin
         7'b0010011:
         begin
             if (funct7_reg == 7'b0000000) begin
-                case (funct3_reg)
+                case (AluControl_reg)
                     3'b000: ALUOp = `ADD; //addi
                     3'b001: ALUOp = `SLL; //slli
                     3'b010: ALUOp = `SLT; //slti
@@ -51,7 +51,7 @@ begin
                 endcase
             end
             else if (funct7_reg == 7'b0100000) begin
-                case (funct3_reg)
+                case (AluControl_reg)
                     3'b000: ALUOp = `SUB; //subi
                     3'b101: ALUOp = `SRA; //srai
                 endcase
@@ -70,5 +70,6 @@ begin
         7'b0010111: ALUOp=`ADD;
         default: ALUOp=`NOP;
     endcase
+    //note -> need to add logic for pc=pc+4 if needed
 end
 endmodule
