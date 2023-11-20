@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 `include "defines.v"
 module ALU_ctrl(
-    input [6:0]opcode_reg,
-    input [2:0]funct3_reg,
-    input [6:0]funct7_reg,
+    input wire [6:0]opcode_reg,
+    input wire [2:0]funct3_reg,
+    input wire [6:0]funct7_reg,
     output reg [3:0]ALUOp
 );
 always @(*)
