@@ -55,6 +55,6 @@ By Rohan Gupta & Adideb Das
 
 ## Reference
 
-For more details on the RISC-V processor design, you can refer to the [Medium article](https://medium.com/programmatic/how-to-design-a-risc-v-processor-12388e1163c).
-Implementation inspired from (https://github.com/Moo-osama/RISCV-verilog/tree/main)
+- [Medium article](https://medium.com/programmatic/how-to-design-a-risc-v-processor-12388e1163c).
+- (https://github.com/Moo-osama/RISCV-verilog/tree/main)
 
