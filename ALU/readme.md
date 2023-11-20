@@ -81,5 +81,6 @@ By Rohan Gupta & Adideb Das
 ## Reference
 
 - [Medium article](https://medium.com/programmatic/how-to-design-a-risc-v-processor-12388e1163c).
-- (https://github.com/Moo-osama/RISCV-verilog/tree/main)
+- https://github.com/johnwinans/rvalp/releases
+- https://github.com/Moo-osama/RISCV-verilog/tree/main
 
