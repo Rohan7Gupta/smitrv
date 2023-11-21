@@ -20,42 +20,84 @@ initial begin
     funct7_reg = 7'b0000000;
     funct3_reg = 3'b000;//R ADD
     #10
-	// srca=32'd5;
-    // srcb=32'd6;
-    // op=4'b0001;//SUB
-	// #10
-	// srca=32'd5;
-    // srcb=32'd5;
-    // op=4'b0001;//SUB
-	// #10
-	// srca=32'd5;
-    // srcb=32'd6;
-    // op=4'b0100;//OR
-	// #10
-	// srca=32'd5;
-    // srcb=32'd6;
-    // op=4'b0101;//AND
-	// #10
-	// srca=32'h87654321;
-    // srcb=32'h08;//expected 00876543
-    // op=4'b1000;//SRL
-	// #10
-	// srca=32'h87654321;
-    // srcb=32'h08; //expected 0xff876543
-    // op=4'b1010;//SRA
-	// #10
-	// srca=32'h12345678;
-    // srcb=32'h08;//expected 0x34567800
-    // op=4'b1001;//SLL
-	// #10
-	// srca=32'h12345678;
-    // srcb=32'h0000ffff;//expected 0x00000000
-    // op=4'b1101;//SLT
-	// #10
-	// srca=32'h12345678;
-    // srcb=32'h0000ffff;//expected 0x00000000
-    // op=4'b1111;//SLTU
-	// #10
+	srcA=32'd5;
+    srcB=32'd7;
+    opcode_reg = 7'b0010011;
+    funct7_reg = 7'b0100000;
+    funct3_reg=4'b000;//SUB
+	#10
+	srcA=32'd567;
+    srcB=32'd6;
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0100000;
+    funct3_reg = 4'b000;//SUBi
+	#10
+	srcA=32'd5;
+    srcB=32'd6;
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0000000;
+    funct3_reg = 4'b110;//OR
+	#10
+	srcA=32'd5;
+    srcB=32'd6;
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0000000;
+    funct3_reg = 4'b111;//AND
+	#10
+	srcA=32'h87654321;
+    srcB=32'h08;//expected 00876543
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0000000;
+    funct3_reg = 4'b101;//SRL
+	#10
+	srcA=32'h87654321;
+    srcB=32'h08; //expected 0xff876543
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0100000;
+    funct3_reg = 4'b101;//SRA
+	#10
+	srcA=32'h12345678;
+    srcB=32'h08;//expected 0x34567800
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0000000;
+    funct3_reg = 4'b001;//SLL
+	#10
+	srcA=32'h12345678;
+    srcB=32'h0000ffff;//expected 0x00000000
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0000000;
+    funct3_reg = 4'b010;//SLT
+	#10
+	srcA=32'h12345678;
+    srcB=32'h0000ffff;//expected 0x00000000
+    opcode_reg = 7'b0110011;
+    funct7_reg = 7'b0000000;
+    funct3_reg = 4'b011;//SLTU
+	#10
+    srcA=32'h12345678;
+    srcB=32'h0000ffff;//expected 0x00000000
+    opcode_reg = 7'b1101111;//JAL;
+    #10
+    srcA=32'd8;
+    srcB=32'd87;
+    opcode_reg = 7'b1100011;
+    funct3_reg = 4'b000;//beq  o/p -> not branch
+	#10
+    srcA=32'd87;
+    srcB=32'd87;
+    opcode_reg = 7'b1100011;
+    funct3_reg = 4'b000;//beq  o/p -> branch
+	#10
+    srcA=32'd908;
+    srcB=32'd87;
+    opcode_reg = 7'b1100011;
+    funct3_reg = 4'b100;//blt  o/p -> not branch
+	#10
+    srcA=32'd8;
+    srcB=32'd87;
+    opcode_reg = 7'b1100011;
+    funct3_reg = 4'b100;//blt  o/p -> branch
+	#10
 	$display("test complete");
 end
 
