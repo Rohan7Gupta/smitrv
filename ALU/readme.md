@@ -22,11 +22,34 @@ By Rohan Gupta & Adideb Das
 ![Processor Architecture](https://github.com/Rohan7Gupta/smitrv/assets/107053094/ef118744-9367-43c2-9b14-e6c7b1c1c094)
 
 ## ALU Details
-### alu_ctrl.v
+
+### ALU_core.v
+#### Inputs
+1. **SrcA[31:0]:** First source operand for the ALU from MUX32_2_!.
+2. **SrcB[31:0]:** Second source operand for the ALU, selected from MUX32_4_1.
+3. **ALUOp:** Type of operatin.
+
+#### Outputs
+1. **ALUResult[31:0]:** Result of the ALU operation (to multiplexer).
+2. **zerof , signf, overFlowf, carryf**  Flags
+
+
+### branch_control.v
+#### Inputs
+1. **opcode[6:0]:** Specifies the ALU operation based on the opcode of the instruction: (from Control unit module) (R,I,B,J,S,L) Types
+2. **funct3_reg[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
+3. **zf , sf, of, cf**  Flags
+
+#### Outputs
+1. **branch** 1 if branch or 0
+
+
+### ALU.v
 #### Inputs
 1. **opcode[6:0]:** Specifies the ALU operation based on the opcode of the instruction: (from Control unit module) (R,I,B,J,S,L) Types
 2. **funct3_reg[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
 3. **funct7_reg[6:0]:** add or sub (from control unit)
+4. **SrcA[31:0], SrcB[31:0]**:data signals from mux
 
 #### Outputs
 1. **ALUOp[3:0]:** Type of operation
@@ -39,29 +62,12 @@ By Rohan Gupta & Adideb Das
 -  SRL         4'b10_00
 -  SRA         4'b10_10
 -  SLL         4'b10_01
-- SLT         4'b11_01
-- SLTU        4'b11_11
-- NOP         4'b11_10
-
-### ALU_core.v
-#### Inputs
-1. **SrcA[31:0]:** First source operand for the ALU from MUX32_2_!.
-2. **SrcB[31:0]:** Second source operand for the ALU, selected from MUX32_4_1.
-3. **ALUOp:** Type of operatin.
-
-#### Outputs
-1. **ALUResult[31:0]:** Result of the ALU operation (to multiplexer).
-2. **zerof , signf, overFlowf, carryf**  Flags
-
-### branch_control.v
-#### Inputs
-1. **opcode[6:0]:** Specifies the ALU operation based on the opcode of the instruction: (from Control unit module) (R,I,B,J,S,L) Types
-2. **funct3_reg[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
+-  SLT         4'b11_01
+-  SLTU        4'b11_11
+-  NOP         4'b11_10
+2. **ALUResult[31:0]:** Result of the ALU operation (to multiplexer).
 3. **zf , sf, of, cf**  Flags
-
-#### Outputs
-1. **branch** 1 if branch or 0
-
+4. **branch**: ?( Branch taken : branch not taken)
 
 ## Instruction format
 ![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/15405f0f-cb8d-42f9-9c77-184ecde39977)
