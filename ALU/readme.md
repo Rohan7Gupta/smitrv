@@ -10,41 +10,21 @@ By Rohan Gupta & Adideb Das
 - The implemnentation for pc=pc+4 is not added yet.(will pc be increemented in the alu?) (ALU_ctrl, MUX32_4_1.v)
 - SRA implementation in ALU_core (same o/p as SRL)
 
-## Ignore files other than:
-1. ALU_core.v
-2. alu_ctrl.v
-3. MUX32_4_1.v
-4. MUX32_2_1.v
-5. defines.v
-6. branch_control.v
+## Required files :
+1. alu_core.v
+2. MUX32_2_1_ALU_out.v
+3. MUX32_4_1_SrcB.v
+4. MUX32_2_1_SrcA.v
+5. ALU_tb.v
+
 ## Processor Architecture
 
-![Processor Architecture](https://github.com/Rohan7Gupta/smitrv/assets/107053094/ef118744-9367-43c2-9b14-e6c7b1c1c094)
+![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/6acc542f-2c5a-48dc-99da-47f815d5eb7d)
+
 
 ## ALU Details
 
-### ALU_core.v
-#### Inputs
-1. **SrcA[31:0]:** First source operand for the ALU from MUX32_2_!.
-2. **SrcB[31:0]:** Second source operand for the ALU, selected from MUX32_4_1.
-3. **ALUOp:** Type of operatin.
-
-#### Outputs
-1. **ALUResult[31:0]:** Result of the ALU operation (to multiplexer).
-2. **zerof , signf, overFlowf, carryf**  Flags
-
-
-### branch_control.v
-#### Inputs
-1. **opcode[6:0]:** Specifies the ALU operation based on the opcode of the instruction: (from Control unit module) (R,I,B,J,S,L) Types
-2. **funct3_reg[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
-3. **zf , sf, of, cf**  Flags
-
-#### Outputs
-1. **branch** 1 if branch or 0
-
-
-### ALU.v
+### alu.v
 #### Inputs
 1. **opcode[6:0]:** Specifies the ALU operation based on the opcode of the instruction: (from Control unit module) (R,I,B,J,S,L) Types
 2. **funct3_reg[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
@@ -52,22 +32,8 @@ By Rohan Gupta & Adideb Das
 4. **SrcA[31:0], SrcB[31:0]**:data signals from mux
 
 #### Outputs
-1. **ALUOp[3:0]:** Type of operation
--  ADD         4'b00_00
--  SUB         4'b00_01
--  PASS        4'b00_11
--  OR          4'b01_00
--  AND         4'b01_01
--  XOR         4'b01_11
--  SRL         4'b10_00
--  SRA         4'b10_10
--  SLL         4'b10_01
--  SLT         4'b11_01
--  SLTU        4'b11_11
--  NOP         4'b11_10
-2. **ALUResult[31:0]:** Result of the ALU operation (to multiplexer).
-3. **zf , sf, of, cf**  Flags
-4. **branch**: ?( Branch taken : branch not taken)
+1.. **ALUResult[31:0]:** Result of the ALU operation (to multiplexer).
+2. **branch**: ?( Branch taken : branch not taken)
 
 ## Instruction format
 ![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/15405f0f-cb8d-42f9-9c77-184ecde39977)
@@ -76,12 +42,14 @@ By Rohan Gupta & Adideb Das
 ## testing
 ### ALU_core_tb.v
 ##### How to execute
-- iverilog -o ALU_core_tb.vvp ALU_core_tb.v
-- vvp ALU_core_tb.vvp
-- gtkwave alu_core_test.vcd
+- iverilog -o ALU_tb.vvp ALU_tb.v
+- vvp ALU_tb.vvp
+- gtkwave alu_test.vcd
 
-## ALU_core_tb waveform
-![waveform](https://github.com/Rohan7Gupta/smitrv/assets/107053094/b95ff712-af9a-4ac9-96df-2e437c46f40e)
+## ALU_tb waveform
+![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/3c6144b0-0370-479c-a4a0-f6bceb099427)
+
+
 
 
 ## Reference
