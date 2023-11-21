@@ -9,22 +9,18 @@ module alu(
     output reg branch
 );
 
-wire cf, zf, of, sf;
-wire [31:0] addTemp, compSrcB;
-assign compSrcB = (~SrcB);       
-assign {cf, addTemp} = funct7_reg[5] ? (SrcA + compSrcB + 1'b1) : (SrcA + SrcB); 
-assign zf = (addTemp == 0);
-assign sf = addTemp[31];
-assign of = (SrcA[31] ^ (compSrcB[31]) ^ addTemp[31] ^ cf);
-
-reg cfb, zfb, ofb, sfb;
-reg [31:0] addTempb, compSrcBb;
+reg cf, zf, of, sf;
+reg [31:0] addTemp, compSrcB;
 
 always @(*)
 begin
     case (opcode_reg)
         //  R-type instructions
         7'b0110011: begin
+            compSrcB = (~SrcB);       
+            {cf, addTemp} = funct7_reg[5] ? (SrcA + compSrcB + 1'b1) : (SrcA + SrcB);             zf = (addTemp == 0);
+            sf = addTemp[31];
+            of = (SrcA[31] ^ (compSrcB[31]) ^ addTemp[31] ^ cf);
             if (funct7_reg == 7'b0000000) begin
                 case (funct3_reg)
                     3'b000:  ALUResult = addTemp; //add
@@ -47,21 +43,25 @@ begin
         end
         //  I-type instructions(load)
         7'b0000011: begin
-                compSrcBb = (~SrcB);       
-                {cfb, addTempb} = SrcA + SrcB; 
-                ALUResult = addTempb;
+                compSrcB = (~SrcB);       
+                {cf, addTemp} = SrcA + SrcB; 
+                ALUResult = addTemp;
                 branch = 1'b0;
         end//lb,lh,lw,lbu,lhu
         //  I-type instructions(jump)
         7'b1100111: begin
-                    {cfb, addTempb} = SrcA + SrcB; 
-                    ALUResult = addTempb;
+                    {cf, addTemp} = SrcA + SrcB; 
+                    ALUResult = addTemp;
                     branch=1'b1;
         end//jalr srcA=rs1
 
         //  I-type instructions(shift, logical, arithmetic)
         7'b0010011:
         begin
+            compSrcB = (~SrcB);       
+            {cf, addTemp} = funct7_reg[5] ? (SrcA + compSrcB + 1'b1) : (SrcA + SrcB);             zf = (addTemp == 0);
+            sf = addTemp[31];
+            of = (SrcA[31] ^ (compSrcB[31]) ^ addTemp[31] ^ cf);
             if (funct7_reg == 7'b0000000) begin
                 case (funct3_reg)
                     3'b000:  ALUResult = addTemp; //add
@@ -84,33 +84,33 @@ begin
         end
         //  S-type instructions
         7'b0100011: begin
-            {cfb, addTempb} = SrcA + SrcB; 
-            ALUResult = addTempb;
+            {cf, addTemp} = SrcA + SrcB; 
+            ALUResult = addTemp;
             branch = 1'b0;
         end//sb,sh,sw
    
         //B-type instructions
         7'b1100011: begin
-            compSrcBb = (~SrcB);       
-             {cfb, addTempb} = SrcA + compSrcBb + 1'b1; 
-             zfb = (addTempb == 0);
-             sfb = addTempb[31];
-             ofb = (SrcA[31] ^ (compSrcBb[31]) ^ addTempb[31] ^ cfb);
+            compSrcB = (~SrcB);       
+             {cf, addTemp} = SrcA + compSrcB + 1'b1; 
+             zf = (addTemp == 0);
+             sf = addTemp[31];
+             of = (SrcA[31] ^ (compSrcB[31]) ^ addTemp[31] ^ cf);
             ALUResult=addTemp;                    
                     case (funct3_reg) 
-                        3'b000: branch = zfb;  //beq      
-                        3'b001: branch = ~zfb;      //bne  
-                        3'b100: branch = (sfb!=ofb);      //blt    
-                        3'b101: branch = (sfb==ofb);        ///bge
-                        3'b110:branch = ~cfb;         //bltu
-                        3'b111:branch = cfb;   //bgeu
+                        3'b000: branch = zf;  //beq      
+                        3'b001: branch = ~zf;      //bne  
+                        3'b100: branch = (sf!=of);      //blt    
+                        3'b101: branch = (sf==of);        ///bge
+                        3'b110:branch = ~cf;         //bltu
+                        3'b111:branch = cf;   //bgeu
                         default: branch = 1'b0;    
                     endcase
                     end//beq,bge,bgeu,blt,bltu,bne
         //  J-type instructions
         7'b1101111: begin 
-                    {cfb, addTempb} = SrcA + SrcB; 
-                    ALUResult = addTempb;;
+                    {cf, addTemp} = SrcA + SrcB; 
+                    ALUResult = addTemp;;
                     branch=1'b1;
         end//jal srcA=pc
         //  U-type (load upper immediate)
@@ -120,8 +120,8 @@ begin
         end
         //  U-type (add upper immediate)
         7'b0010111: begin 
-                {cfb, addTempb} = SrcA + SrcB; 
-                ALUResult = addTempb;
+                {cf, addTemp} = SrcA + SrcB; 
+                ALUResult = addTemp;
                 branch = 1'b0;
         end
         //default: ALUOp=`NOP;
