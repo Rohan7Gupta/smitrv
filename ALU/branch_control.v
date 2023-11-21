@@ -4,7 +4,7 @@
 module branch_control(
     input [4:0] opcode_reg, 
     input [2:0] funct3_reg,
-    input cf, zf, of, sf, branch,
+    input cf, zf, of, sf,
     output reg branch
     );
     

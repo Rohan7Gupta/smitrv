@@ -4,10 +4,14 @@ module ALU_ctrl(
     input wire [6:0]opcode_reg,
     input wire [2:0]funct3_reg,
     input wire [6:0]funct7_reg,
+    input wire [31:0] SrcA, SrcB,
     output reg [3:0]ALUOp
+    output reg  [31:0] ALUResult,
+    output wire cf, zf, of, sf
+    output reg branch
 );
 always @(*)
-begin
+initial begin
     case (opcode_reg)
         //  R-type instructions
         7'b0110011: begin
@@ -71,5 +75,11 @@ begin
         default: ALUOp=`NOP;
     endcase
     //note -> need to add logic for pc=pc+4 if needed
+
+    ALU_core core(SrcA,SrcB,ALUOp,ALUResult,cf,zf,of,sf);
+    if (opcode_reg == 7'b1100011 || opcode_reg==7'b1100111 || opcode_reg== 7'b1100011) begin
+        branch_control br(opcode_reg,funct3_reg,cf,zf,of,sf,branch);
+    end
+
 end
 endmodule
