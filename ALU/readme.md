@@ -19,7 +19,8 @@ By Rohan Gupta & Adideb Das
 
 ## Processor Architecture
 
-![Processor Architecture](https://github.com/Rohan7Gupta/smitrv/assets/107053094/ef118744-9367-43c2-9b14-e6c7b1c1c094)
+![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/6acc542f-2c5a-48dc-99da-47f815d5eb7d)
+
 
 ## ALU Details
 
@@ -41,12 +42,13 @@ By Rohan Gupta & Adideb Das
 ## testing
 ### ALU_core_tb.v
 ##### How to execute
-- iverilog -o ALU_core_tb.vvp ALU_core_tb.v
-- vvp ALU_core_tb.vvp
-- gtkwave alu_core_test.vcd
+- iverilog -o ALU_tb.vvp ALU_tb.v
+- vvp ALU_tb.vvp
+- gtkwave alu_test.vcd
 
 ## ALU_tb waveform
-![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/cc2522a4-84ac-4ead-87cd-0fc07cda0a9b)
+![image](https://github.com/Rohan7Gupta/smitrv/assets/107053094/3c6144b0-0370-479c-a4a0-f6bceb099427)
+
 
 
 
