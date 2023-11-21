@@ -1,4 +1,5 @@
 # Ignore compiled files
-*ALU_core_tb.vvp
-*alu_core_test.vcd
+*.vvp
+*.vcd
 *my_design
+
