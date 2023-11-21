@@ -10,11 +10,12 @@ By Rohan Gupta & Adideb Das
 - The implemnentation for pc=pc+4 is not added yet.(will pc be increemented in the alu?) (ALU_ctrl, MUX32_4_1.v)
 - SRA implementation in ALU_core (same o/p as SRL)
 
-## Ignore files other than:
+## Required files :
 1. alu_core.v
 2. MUX32_2_1_ALU_out.v
 3. MUX32_4_1_SrcB.v
 4. MUX32_2_1_SrcA.v
+5. ALU_tb.v
 
 ## Processor Architecture
 
