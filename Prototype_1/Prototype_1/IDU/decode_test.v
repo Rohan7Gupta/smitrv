@@ -21,13 +21,13 @@ module decode_test;
     wire RegWrite_tb;
     wire Branch_tb;
     wire PCWrite_tb;
-    wire PCEn_tb;
+    wire PCSel_tb;
     wire [2:0] AluControl_tb;
     
 decode_unit d0(
     .clk(clk_tb),
     .reset(reset_tb),
-    .Cond_Chk_reg(Cond_Chk_tb);
+    .Cond_Chk_reg(Cond_Chk_tb),
     .instruction(instruction_tb),
     .opcode_reg(opcode_tb),
     .funct3_reg(funct3_tb),
@@ -45,7 +45,7 @@ decode_unit d0(
     .RegWrite_reg(RegWrite_tb),
     .Branch_reg(Branch_tb),
     .PCWrite_reg(PCWrite_tb),
-    .PCEn_reg(PCEn_tb),
+    .PCSel_reg(PCSel_tb),
     .AluControl_reg(AluControl_tb)
 );
   
@@ -62,9 +62,9 @@ begin
 end
 
 always @(posedge clk_tb) begin
+    Cond_Chk_tb = 1;
     instruction_tb = 32'h002a5a3; // add rd1, rs1, rs2
-    
-#200
-$finish;
+    #200
+    $finish;
 end
 endmodule

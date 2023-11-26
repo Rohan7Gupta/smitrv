@@ -1,7 +1,7 @@
 module decode_unit(
     input clk,
     input reset,
-    input reg Cond_Chk_reg, // determines PCSel_reg
+    input Cond_Chk_reg, // determines PCSel_reg
     input [31:0] instruction,
     output reg [6:0] opcode_reg,
     output reg [4:0] rs1_reg,
@@ -25,8 +25,6 @@ module decode_unit(
 );
 always @(posedge clk or posedge reset) begin
     if (reset) begin
-        Cond_Chk_reg <= 0;
-        instruction <= 0;
         opcode_reg <= 0;
         rs1_reg <= 0;
         rs2_reg <= 0;
@@ -52,7 +50,6 @@ always @(posedge clk or posedge reset) begin
             //  Fetching
             0: begin
                 #10
-                Cond_Chk_reg <= 0;
                 opcode_reg <= instruction[6:0];
                 rs1_reg <= instruction[19:15];
                 rs2_reg <= instruction[24:20];

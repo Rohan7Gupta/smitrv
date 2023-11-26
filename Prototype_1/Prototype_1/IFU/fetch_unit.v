@@ -1,8 +1,8 @@
 module fetch_unit(
     input clk,
     input reset,
-    input reg PCSel_reg, // selects between (pc+4) and (pc')
-    input reg [31:0] Imm_reg, // immediate data
+    input PCSel_reg, // selects between (pc+4) and (pc')
+    input [31:0] Imm_reg, // immediate data
     //input reg [31:0] ALU_result_reg, // ALU output
     output reg [31:0] pc_reg // program conter register
 );
@@ -11,8 +11,6 @@ module fetch_unit(
 always @(posedge clk or posedge reset)
 begin
     if (reset) begin
-        PCSel_reg <= 0;
-        Imm_reg <= 0;
         //ALU_result_reg <= 0;
         pc_reg <= 0;
     end
@@ -24,7 +22,7 @@ begin
         else begin
             pc_reg <= pc_reg + 4;
         end
-        /*//Combined model
+        /*Combined model
             pc_reg <= ALU_result_reg;
         */
     end
