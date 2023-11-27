@@ -145,12 +145,14 @@ always @(posedge clk) begin
                         AluSrcB_reg <= 2'b00;
                         Branch_reg <= 1'b1;
                         Imm_reg <= {{20{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8]};
-                        AluControl_reg <= {0, funct3_reg}; //beq, bne, blt, bge, bltu, bgeu (conditional)
+                        AluControl_reg <= {1, funct3_reg}; //beq, bne, blt, bge, bltu, bgeu (conditional)
+                        //changed 0 to 1 for ALU compatibility
                     end
                     //  J-type instructions
                     7'b1100011: begin
                         AluSrcA_reg <= 1'b0;
                         AluSrcB_reg <= 2'b10;
+                        AluControl_reg <= 4'b0000; //added by Rohan for alu compatibility
                         Imm_reg <= {{12{instruction[31]}}, instruction[31], instruction[19:12], instruction[20], instruction[30:21]}; //jal
                     end
                     //  U-type (load upper immediate)
@@ -162,6 +164,7 @@ always @(posedge clk) begin
                         AluSrcA_reg <= 1'b0;
                         AluSrcB_reg <= 2'b10;
                         Imm_reg = {instruction[31:20], 12'b0};
+                        AluControl_reg <= 4'b0000; //added by Rohan for alu compatibility
                     end
                 endcase
                 stage <= 3;
