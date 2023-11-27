@@ -27,8 +27,23 @@ By Rohan Gupta & Adideb Das
 ### alu.v
 #### Inputs
 1. **opcode[6:0]:** Specifies the ALU operation based on the opcode of the instruction: (from Control unit module) (R,I,B,J,S,L) Types
-2. **funct3_reg[2:0]:** Control signals for the ALU operation, represented as [a b c]: from Control_unit
-3. **funct7_reg[6:0]:** add or sub (from control unit)
+2. **AluControl_reg[3:0]** From decode
+    - 0000 add/addi
+    - 0001 sll/slli
+    - 0010 slt/slti
+    - 0011 sltu/sltui
+    - 0100 xor/xori/blt
+    - 0101 srl/srli/bge
+    - 0110 sra/srai/bltu
+    - 0111 and/andi/bgeu
+    - 1000 sub / beq
+    - 1001 bne
+    - 1010 
+    - 1011
+    - 1100 blt
+    - 1101 sra/srai/ bge
+    - 1110 bltu
+    - 1111 bgeu
 4. **SrcA[31:0], SrcB[31:0]**:data signals from mux
 
 #### Outputs

@@ -20,10 +20,10 @@ module decode_unit(
     output reg Branch_reg,
     output reg PCWrite_reg,
     output reg PCSel_reg,
-    output reg [2:0] AluControl_reg,
+    output reg [3:0] AluControl_reg,
     output reg [2:0] stage
 );
-always @(posedge clk or posedge reset) begin
+always @(posedge clk) begin
     if (reset) begin
         opcode_reg <= 0;
         rs1_reg <= 0;
@@ -68,22 +68,11 @@ always @(posedge clk or posedge reset) begin
                 PCWrite_reg <= 1'b0;
                 PCSel_reg <= 1'b0;
                 AluControl_reg <= 3'b000;
-                case (opcode_reg)
-                    7'b0110011: stage <= 1; //R-type(register)
-                    7'b0000011: stage <= 1; //I-type(immediate load)
-                    7'b1100111: stage <= 1; //I-type(immediate jump)
-                    7'b0010011: stage <= 1; //I-type(immediate shift, logical, arithmetic)
-                    7'b0100011: stage <= 1; //S-type(store)
-                    7'b1100011: stage <= 1; //B-type(branch)
-                    7'b1101111: stage <= 1; //J-type(jump)
-                    7'b0110111: stage <= 1; //U-type(load upper immediate)
-                    7'b0010111: stage <= 1; //U-type(add upper immediate)
-                endcase
+                stage <= 1;
             end
 
             //  Decode
             1: begin
-                #10
                 case (opcode_reg)
                     //  I-type(jump), J-type
                     7'b1100111, 7'b1101111: begin
@@ -103,22 +92,10 @@ always @(posedge clk or posedge reset) begin
                         AluSrcA_reg <= 1'b1;
                         AluSrcB_reg <= 2'b00;
                         if (funct7_reg == 7'b0000000) begin
-                            case (funct3_reg)
-                                3'b000: AluControl_reg <= 3'b000; //add
-                                3'b001: AluControl_reg <= 3'b001; //sll
-                                3'b010: AluControl_reg <= 3'b010; //slt (conditional)
-                                3'b011: AluControl_reg <= 3'b011; //sltu (conditional)
-                                3'b100: AluControl_reg <= 3'b100; //xor
-                                3'b101: AluControl_reg <= 3'b101; //srl
-                                3'b110: AluControl_reg <= 3'b110; //or
-                                3'b111: AluControl_reg <= 3'b111; //and
-                            endcase
+                            AluControl_reg <= {0, funct3_reg}; //add, slt, sltu, sll, xor, srl, or ,and
                         end
                         else if (funct7_reg == 7'b0100000) begin
-                            case (funct3_reg)
-                                3'b000: AluControl_reg <= 3'b000; //sub
-                                3'b101: AluControl_reg <= 3'b101; //sra
-                            endcase
+                            AluControl_reg <= {1, funct3_reg}; //sub, sra
                         end
                     end
                     //  I-type instructions(load)
@@ -126,22 +103,14 @@ always @(posedge clk or posedge reset) begin
                         AluSrcA_reg <= 1'b1;
                         AluSrcB_reg <= 2'b10;
                         Imm_reg <= {{20{instruction[31]}}, instruction[31:20]};
-                        case (funct3_reg)
-                            3'b000: AluControl_reg <= 3'b000; //lb
-                            3'b001: AluControl_reg <= 3'b001; //lh
-                            3'b010: AluControl_reg <= 3'b010; //lw
-                            3'b100: AluControl_reg <= 3'b100; //lbu
-                            3'b101: AluControl_reg <= 3'b101; //lhu
-                        endcase
+                        AluControl_reg <= {0, funct3_reg}; //lb, lh, lw, lbu, lhu
                     end
                     //  I-type instructions(jump)
                     7'b1100111: begin
                         AluSrcA_reg <= 1'b1;
                         AluSrcB_reg <= 2'b10;
                         Imm_reg <= {{20{instruction[31]}}, instruction[31:20]};
-                        case (funct3_reg)
-                            3'b000: AluControl_reg <= 3'b000; //jalr
-                        endcase
+                        AluControl_reg <= {0, funct3_reg}; //jalr
                     end
                     //  I-type instructions(shift, logical, arithmetic)
                     7'b0010011: begin
@@ -150,20 +119,17 @@ always @(posedge clk or posedge reset) begin
                         case (funct3_reg)
                             3'b001, 3'b101: begin // slli, srli, srai
                                 Imm_reg = {12'b0, instruction[31:20]}; // shift amount immediate
+                                if (funct7_reg == 7'b0000000) begin
+                                    AluControl_reg <= {0, funct3_reg}; //slli, srli
+                                end
+                                else if (funct7_reg == 7'b0100000) begin
+                                    AluControl_reg <= {1, funct3_reg}; //srai
+                                end
                             end
                             3'b000, 3'b010, 3'b011, 3'b100, 3'b111: begin // addi, slti, sltiu, xori, ori, andi
                                 Imm_reg <= {{20{instruction[31]}}, instruction[31:20]};
+                                AluControl_reg <= {0, funct3_reg};
                             end
-                        endcase
-                        case (funct3_reg)
-                            3'b000: AluControl_reg <= 3'b000; //addi
-                            3'b010: AluControl_reg <= 3'b010; //slti (conditional)
-                            3'b011: AluControl_reg <= 3'b011; //sltiu (conditional)
-                            3'b100: AluControl_reg <= 3'b100; //xori
-                            3'b110: AluControl_reg <= 3'b110; //ori
-                            3'b111: AluControl_reg <= 3'b111; //andi
-                            3'b001: AluControl_reg <= 3'b001; //slli
-                            3'b101: AluControl_reg <= 3'b101; //srli or srai
                         endcase
                     end
                     //  S-type instructions
@@ -171,11 +137,7 @@ always @(posedge clk or posedge reset) begin
                         AluSrcA_reg <= 1'b1;
                         AluSrcB_reg <= 2'b10;
                         Imm_reg <= {{20{instruction[31]}}, instruction[31:25], instruction[11:7]};
-                        case (funct3_reg)
-                            3'b000: AluControl_reg <= 3'b000; //sb
-                            3'b001: AluControl_reg <= 3'b001; //sh
-                            3'b010: AluControl_reg <= 3'b010; //sw
-                        endcase
+                        AluControl_reg <= {0, funct3_reg}; //sb, sh, sw
                     end
                     //  B-type instructions
                     7'b1100011: begin
@@ -183,14 +145,7 @@ always @(posedge clk or posedge reset) begin
                         AluSrcB_reg <= 2'b00;
                         Branch_reg <= 1'b1;
                         Imm_reg <= {{20{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8]};
-                        case (funct3_reg)
-                            3'b000: AluControl_reg <= 3'b000; //beq (conditional)
-                            3'b001: AluControl_reg <= 3'b001; //bne (conditional)
-                            3'b100: AluControl_reg <= 3'b100; //blt (conditional)
-                            3'b101: AluControl_reg <= 3'b101; //bge (conditional)
-                            3'b110: AluControl_reg <= 3'b110; //bltu (conditional)
-                            3'b111: AluControl_reg <= 3'b111; //bgeu (conditional)
-                        endcase
+                        AluControl_reg <= {0, funct3_reg}; //beq, bne, blt, bge, bltu, bgeu (conditional)
                     end
                     //  J-type instructions
                     7'b1100011: begin
